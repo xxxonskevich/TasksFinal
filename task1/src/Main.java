@@ -1,26 +1,24 @@
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        if (args.length < 2) {
+            System.out.println("Usage: java Main n and m");
+            return;
+        }
 
-        System.out.print("n = ");
-        int n = scanner.nextInt();
-
-        System.out.print("m = ");
-        int m = scanner.nextInt();
+        int n = Integer.parseInt(args[0]);
+        int m = Integer.parseInt(args[1]);
 
         int[] circularArray = new int[n];
         for (int i = 1; i <= n; i++) {
             circularArray[i - 1] = i;
         }
-        if (n==1){
+        if (n == 1) {
             System.out.print(circularArray[0]);
-        }else{
+        } else {
             int c = 0;
             int last = 1;
 
-            while( 1 != circularArray[last]){
+            while (1 != circularArray[last]) {
                 System.out.print(circularArray[c]);
                 c = (c + m - 1) % n;
                 last = c;

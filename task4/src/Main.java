@@ -38,7 +38,17 @@ public class Main {
     private static int minMoves(int[] nums) {
         int n = nums.length;
         Arrays.sort(nums);
-        int median = nums[n / 2];
+
+        int median;
+        if (n % 2 == 0) {
+            // Четное количество элементов
+            int middle1 = nums[n / 2 - 1];
+            int middle2 = nums[n / 2];
+            median = (middle1 + middle2) / 2;
+        } else {
+            // Нечетное количество элементов
+            median = nums[n / 2];
+        }
 
         int moves = 0;
         for (int num : nums) {

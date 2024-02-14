@@ -11,16 +11,25 @@ import java.util.Iterator;
 public class Main {
     public static void main(String[] args) {
 
+        if (args.length != 3) {
+            System.out.println("Usage: java Main <valuesPath> <testsPath> <reportPath>");
+            return;
+        }
+
+        String valuesPath = args[0];
+        String testsPath = args[1];
+        String reportPath = args[2];
+
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
-            JsonNode testsNode = objectMapper.readTree(new File("src\\main\\resources\\tests.json"));
-            JsonNode valuesNode = objectMapper.readTree(new File("src\\main\\resources\\values.json"));
+            JsonNode testsNode = objectMapper.readTree(new File(valuesPath));
+            JsonNode valuesNode = objectMapper.readTree(new File(testsPath));
 
             processTests(testsNode, valuesNode);
 
             // Сохранение обновленной структуры в report.json
-            objectMapper.writeValue(new File("src\\main\\resources\\report.json"), testsNode);
+            objectMapper.writeValue(new File(reportPath), testsNode);
             System.out.println("Report successfully generated!");
 
         } catch (IOException e) {
@@ -39,7 +48,7 @@ public class Main {
                     getValueTest(testNode, valuesNode);
                 }
             }
-        }else if(rootNode.isArray()){
+        } else if (rootNode.isArray()) {
             Iterator<JsonNode> testIterator = rootNode.elements();
             while (testIterator.hasNext()) {
                 JsonNode testNode = testIterator.next();
